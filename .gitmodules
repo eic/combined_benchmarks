@@ -1,0 +1,3 @@
+[submodule "reconstruction_benchmarks"]
+	path = reconstruction_benchmarks
+	url = https://eicweb.phy.anl.gov/EIC/benchmarks/reconstruction_benchmarks.git
