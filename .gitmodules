@@ -1,3 +1,8 @@
 [submodule "reconstruction_benchmarks"]
 	path = reconstruction_benchmarks
+	branch = master
 	url = https://eicweb.phy.anl.gov/EIC/benchmarks/reconstruction_benchmarks.git
+[submodule "common_bench"]
+	path = common_bench
+	branch = master
+	url = https://eicweb.phy.anl.gov/EIC/benchmarks/common_bench.git
