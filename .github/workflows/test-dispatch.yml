@@ -1,0 +1,74 @@
+name: Analysis on EICrecon change
+
+on:
+  repository_dispatch:
+    types: [eicrecon-update]
+
+#concurrency:
+#  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+#  cancel-in-progress: true
+
+jobs:
+  #  build-gcc:
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #    - uses: actions/checkout@v3
+  #    - uses: cvmfs-contrib/github-action-cvmfs@v3
+  #    - uses: eic/run-cvmfs-osg-eic-shell@main
+  #      with:
+  #        platform-release: "jug_xl:nightly"
+  #        run: |
+  #          # install this repo
+  #          CC=gcc CXX=g++ cmake -B build -S .
+  #          cmake --build build -- -j 2 install
+  #    - uses: actions/upload-artifact@v3
+  #      with:
+  #        name: build-gcc-eic-shell
+  #        path: |
+  #          .
+  #          !src/
+  #          !apt_cache/
+  #        if-no-files-found: error
+  #
+  #  build-clang:
+  #    runs-on: ubuntu-latest
+  #    needs:
+  #    - build-gcc
+  #    steps:
+  #    - uses: actions/checkout@v3
+  #    - uses: cvmfs-contrib/github-action-cvmfs@v3
+  #    - uses: eic/run-cvmfs-osg-eic-shell@main
+  #      with:
+  #        platform-release: "jug_xl:nightly"
+  #        run: |
+  #          # install this repo
+  #          CC=clang CXX=clang++ cmake -B build -S .
+  #          cmake --build build -- -j 2 install
+  #    - uses: actions/upload-artifact@v3
+  #      with:
+  #        name: build-clang-eic-shell
+  #        path: |
+  #          .
+  #          !src/
+  #          !apt_cache/
+  #        if-no-files-found: error
+
+  ddsim:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        particle: [pi]
+        detector_config: [arches]
+    steps:
+      - uses: cvmfs-contrib/github-action-cvmfs@v3
+      - uses: eic/run-cvmfs-osg-eic-shell@main
+        with:
+          platform-release: "jug_xl:nightly"
+          setup: /opt/detector/setup.sh
+          run: |
+            ddsim --compactFile ${DETECTOR_PATH}/${DETECTOR}_${{ matrix.detector_config }}.xml -G --gun.particle "${{ matrix.particle }}-" --gun.momentumMin "1*GeV" --gun.momentumMax "20*GeV" --gun.distribution "uniform" -N 200 --outputFile sim_${{ matrix.particle }}_1GeV_20GeV_${{ matrix.detector_config }}.edm4hep.root
+      - uses: actions/upload-artifact@v3
+        with:
+          name: sim_${{ matrix.particle }}_1GeV_20GeV_${{ matrix.detector_config }}.edm4hep.root
+          path: sim_${{ matrix.particle }}_1GeV_20GeV_${{ matrix.detector_config }}.edm4hep.root
+          if-no-files-found: error
