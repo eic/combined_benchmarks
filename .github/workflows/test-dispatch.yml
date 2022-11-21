@@ -2,7 +2,6 @@ name: Analysis on EICrecon change
 
 on:
   repository_dispatch:
-    types: [eicrecon-update]
 
 #concurrency:
 #  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
