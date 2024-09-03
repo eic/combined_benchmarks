@@ -88,10 +88,10 @@ jobs:
 #        particle: [pi, e]
 #        detector_config: [arches, brycecanyon]
 #    steps:
-#    - uses: actions/download-artifact@v3
+#    - uses: actions/download-artifact@v4.1.7
 #      with:
 #        name: build-gcc-eic-shell
-#    - uses: actions/download-artifact@v3
+#    - uses: actions/download-artifact@v4.1.7
 #      with:
 #        name: sim_${{ matrix.particle }}_1GeV_20GeV_${{ matrix.detector_config }}.edm4hep.root
 #    - uses: cvmfs-contrib/github-action-cvmfs@v3
@@ -124,7 +124,7 @@ jobs:
         particle: [pi, e]
         detector_config: [arches, brycecanyon]
     steps:
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4.1.7
       with:
         name: sim_${{ matrix.particle }}_1GeV_20GeV_${{ matrix.detector_config }}.edm4hep.root
     - uses: cvmfs-contrib/github-action-cvmfs@v3
@@ -155,11 +155,11 @@ jobs:
 #    steps:
 #      - uses: actions/checkout@v3
 #
-#      - uses: actions/download-artifact@v3
+#      - uses: actions/download-artifact@v4.1.7
 #        with:
 #          name: arches_flags.json
 #
-#      - uses: actions/download-artifact@v3
+#      - uses: actions/download-artifact@v4.1.7
 #        with:
 #          name: arches_right_flags.json
 #
@@ -187,10 +187,10 @@ jobs:
 #      # FIXME hard-coded: see https://github.com/actions/upload-pages-artifact/pull/14
 #    steps:
 #      - uses: actions/checkout@v3
-#      - uses: actions/download-artifact@v3
+#      - uses: actions/download-artifact@v4.1.7
 #        with:
 #          name: flags.md
-#      - uses: actions/download-artifact@v3
+#      - uses: actions/download-artifact@v4.1.7
 #        with:
 #          name: arches_right_flags.json
 #      - run: |
